@@ -58,13 +58,16 @@ if st.button('Predict'):
 
     # Check if the model is fitted, and fit it if necessary
     if not hasattr(model, 'predict'):
+        st.write("Model not fitted. Fitting the model...")
         model.fit(tfidf.transform([""]), [0])  # Fit with empty data to initialize
         st.write("Model fitted successfully.")
 
     # Ensure that the model is fitted before making predictions
     if hasattr(model, 'predict'):
+        st.write("Model is fitted. Making predictions...")
         # Make predictions
         result = model.predict(vector_input)[0]
+        st.write("Prediction made successfully.")
 
         # Display prediction
         if result == 1:
@@ -73,10 +76,3 @@ if st.button('Predict'):
             st.header("Not Spam")
     else:
         st.error("Model is not fitted. Please load a fitted model.")
-
-
-    # Display prediction
-    if result == 1:
-        st.header("Spam")
-    else:
-        st.header("Not Spam")

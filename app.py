@@ -61,8 +61,19 @@ if st.button('Predict'):
         model.fit(tfidf.transform([""]), [0])  # Fit with empty data to initialize
         st.write("Model fitted successfully.")
 
-    # Make predictions
-    result = model.predict(vector_input)[0]
+    # Ensure that the model is fitted before making predictions
+    if hasattr(model, 'predict'):
+        # Make predictions
+        result = model.predict(vector_input)[0]
+
+        # Display prediction
+        if result == 1:
+            st.header("Spam")
+        else:
+            st.header("Not Spam")
+    else:
+        st.error("Model is not fitted. Please load a fitted model.")
+
 
     # Display prediction
     if result == 1:

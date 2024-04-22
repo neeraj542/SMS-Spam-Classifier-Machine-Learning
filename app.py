@@ -54,7 +54,10 @@ input_sms = st.text_area("Enter the message")
 
 if st.button('Predict'):
     transformed_sms = transform_text(input_sms)
+    st.write("Transformed Text:", transformed_sms)  # Debugging message
+
     vector_input = tfidf.transform([transformed_sms])
+    st.write("Vector Input Shape:", vector_input.shape)  # Debugging message
 
     # Check if the model is fitted, and fit it if necessary
     if not hasattr(model, 'predict'):

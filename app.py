@@ -54,24 +54,24 @@ input_sms = st.text_area("Enter the message")
 
 if st.button('Predict'):
     # Preprocess input message
-    st.write("Transforming text...")
+    # st.write("Transforming text...")
     transformed_sms = transform_text(input_sms)
     st.write("Text transformed successfully.")
     
     # Vectorize preprocessed message using TF-IDF vectorizer
-    st.write("Vectorizing text...")
+    # st.write("Vectorizing text...")
     vector_input = tfidf.transform([transformed_sms])
     st.write("Text vectorized successfully.")
 
     # Ensure that the model is fitted before making predictions
-    st.write("Checking if model is fitted...")
+    # st.write("Checking if model is fitted...")
     if hasattr(model, 'fit'):
-        st.write("Model is not fitted. Fitting the model...")
+        # st.write("Model is not fitted. Fitting the model...")
         model.fit(vector_input, [0])  # Fitting with dummy data
         st.write("Model fitted successfully.")
     
     if hasattr(model, 'predict'):
-        st.write("Model is fitted. Making predictions...")
+        # st.write("Model is fitted. Making predictions...")
         # Predict
         result = model.predict(vector_input)[0]
         st.write("Prediction made successfully.")

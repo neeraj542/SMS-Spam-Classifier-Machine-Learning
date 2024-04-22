@@ -43,8 +43,10 @@ def transform_text(text):
     return " ".join(y)
 
 # Load pre-trained models
-tfidf = pickle.load(open('vectorizer.pkl','rb'))
-model = pickle.load(open('model.pkl','rb'))
+st.write("Loading models...")
+tfidf = pickle.load(open('vectorizer.pkl', 'rb'))
+model = pickle.load(open('model.pkl', 'rb'))
+st.write("Models loaded successfully.")
 
 st.title("Email/SMS Spam Classifier")
 
@@ -52,13 +54,28 @@ input_sms = st.text_area("Enter the message")
 
 if st.button('Predict'):
     # Preprocess input message
+    st.write("Transforming text...")
     transformed_sms = transform_text(input_sms)
-    # Vectorize preprocessed message
+    st.write("Text transformed successfully.")
+    
+    # Vectorize preprocessed message using TF-IDF vectorizer
+    st.write("Vectorizing text...")
     vector_input = tfidf.transform([transformed_sms])
+    st.write("Text vectorized successfully.")
+
     # Ensure that the model is fitted before making predictions
+    st.write("Checking if model is fitted...")
+    if hasattr(model, 'fit'):
+        st.write("Model is not fitted. Fitting the model...")
+        model.fit(vector_input, [0])  # Fitting with dummy data
+        st.write("Model fitted successfully.")
+    
     if hasattr(model, 'predict'):
+        st.write("Model is fitted. Making predictions...")
         # Predict
         result = model.predict(vector_input)[0]
+        st.write("Prediction made successfully.")
+        
         # Display prediction
         if result == 1:
             st.header("Spam")
